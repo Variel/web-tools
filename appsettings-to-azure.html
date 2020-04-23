@@ -1,44 +1,47 @@
 <html>
 <head>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 </head>
 <body>
-<textarea id="input-appsettings"></textarea>
-<button onclick="onClickConvert()"></button>
-<textarea id="output-azure"></textarea>
-<script>
-var inputElem = document.getElementById('input-appsettings');
-var outputElm = document.getElementById('output-azure');
+  <textarea class="form-control" id="input-appsettings" rows="5"></textarea>
+  <div class="text-center">
+    <button onclick="onClickConvert()">Convert !</button>
+  </div>
+  <textarea class="form-control" id="output-azure" rows="5"></textarea>
+  <script>
+  var inputElem = document.getElementById('input-appsettings');
+  var outputElem = document.getElementById('output-azure');
 
-function convert(item) {
-  var list = [];
-  var addTree = function (item, prefix) {
-    for(let key in item) {
-      if (!item.hasOwnProperty(key))
-        continue;
+  function convert(item) {
+    var list = [];
+    var addTree = function (item, prefix) {
+      for(let key in item) {
+        if (!item.hasOwnProperty(key))
+          continue;
 
-      if (typeof(item[key]) === "object") {
-        addTree(item[key], (prefix || '') + key + ':');
-      } else {
-        list.push({
-          name: (prefix || '') + key,
-          value: String(item[key]),
-          slotSetting: false
-        });
+        if (typeof(item[key]) === "object") {
+          addTree(item[key], (prefix || '') + key + ':');
+        } else {
+          list.push({
+            name: (prefix || '') + key,
+            value: String(item[key]),
+            slotSetting: false
+          });
+        }
       }
     }
+
+    addTree(item);
+
+    return JSON.stringify(list, null, 2);
   }
 
-  addTree(item);
+  function onClickConvert() {
+    var item = JSON.parse(inputElem.value);
+    var result = convert(item);
 
-  return JSON.stringify(list, null, 2);
-}
-
-function onClickConvert() {
-  var item = JSON.parse(inputElm.value);
-  var result = convert(item);
-  
-  outputElm.value = result;
-}
-</script>
+    outputElem.value = result;
+  }
+  </script>
 </body>
 </html>
