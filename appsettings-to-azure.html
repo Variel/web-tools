@@ -3,11 +3,13 @@
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 </head>
 <body>
-  <textarea class="form-control" id="input-appsettings" rows="5"></textarea>
-  <div class="text-center">
-    <button onclick="onClickConvert()">Convert !</button>
+  <div class="container" style="max-width: 768px">
+    <textarea class="form-control" id="input-appsettings" rows="5"></textarea>
+    <div class="text-center py-5">
+      <button class="btn btn-primary" onclick="onClickConvert()">Convert !</button>
+    </div>
+    <textarea class="form-control" id="output-azure" rows="5"></textarea>
   </div>
-  <textarea class="form-control" id="output-azure" rows="5"></textarea>
   <script>
   var inputElem = document.getElementById('input-appsettings');
   var outputElem = document.getElementById('output-azure');
