@@ -1,0 +1,44 @@
+<html>
+<head>
+</head>
+<body>
+<textarea id="input-appsettings"></textarea>
+<button onclick="onClickConvert()"></button>
+<textarea id="output-azure"></textarea>
+<script>
+var inputElem = document.getElementById('input-appsettings');
+var outputElm = document.getElementById('output-azure');
+
+function convert(item) {
+  var list = [];
+  var addTree = function (item, prefix) {
+    for(let key in item) {
+      if (!item.hasOwnProperty(key))
+        continue;
+
+      if (typeof(item[key]) === "object") {
+        addTree(item[key], (prefix || '') + key + ':');
+      } else {
+        list.push({
+          name: (prefix || '') + key,
+          value: String(item[key]),
+          slotSetting: false
+        });
+      }
+    }
+  }
+
+  addTree(item);
+
+  return JSON.stringify(list, null, 2);
+}
+
+function onClickConvert() {
+  var item = JSON.parse(inputElm.value);
+  var result = convert(item);
+  
+  outputElm.value = result;
+}
+</script>
+</body>
+</html>
